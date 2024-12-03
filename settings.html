@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary - Settings</title>
+  <link rel="stylesheet" href="main.css" />
+  <script src="main.js" type="module" defer></script>
+</head>
+
+<body>
+  <main id="main-content-wrapper">
+    <div id="sidebar-wrapper">
+      <ul id="sidebar-items-wrapper">
+        <li id="sidebar-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="new-diary-entry.html">New Diary Entry</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="all-entries.html">All Entries</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="settings.html">Settings</a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="title-wrapper">
+      <h1>Settings</h1>
+      <hr />
+    </div>
+
+    <div id="entry-settings-wrapper">
+      <form id="entry-settings-form">
+        <div class="input-container">
+          <label for="repository-plataform">Repository Platform:</label>
+          <select name="repositoryPlataform" id="repository-plataform">
+            <option value="github">GitHub</option>
+            <option value="gitlab">GitLab</option>
+          </select>
+        </div>
+
+        <div class="input-container">
+          <label for="api-key">API Key:</label>
+          <input type="password" id="api-key" name="apiKey" />
+        </div>
+
+        <div class="input-container">
+          <label for="repository-name">Repository Name:</label>
+          <input type="text" id="repository-name" name="repositoryName" />
+        </div>
+
+        <div class="input-container">
+          <label for="branch-name">Branch Name:</label>
+          <input type="text" id="branch-name" name="branchName" />
+        </div>
+
+        <button type="submit">Save Settings</button>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>
