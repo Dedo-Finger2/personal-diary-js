@@ -10,6 +10,29 @@ export async function convertKeyAndIVToBase64(key, iv) {
   };
 }
 
+export async function getKeyAndIVFromLocalStorage() {
+  const cryptoKeys = localStorage.getItem("encryptionKeys");
+
+  if (!cryptoKeys.keyBase64 || !cryptoKeys.ivBase64) {
+    throw new Error("AES Key or IV not found.");
+  }
+
+  const rawKey = Uint8Array.from(atob(cryptoKeys.keyBase64), (c) =>
+    c.charCodeAt(0),
+  );
+  const iv = Uint8Array.from(atob(cryptoKeys.ivBase64), (c) => c.charCodeAt(0));
+
+  const aesKey = await crypto.subtle.importKey(
+    "raw",
+    rawKey,
+    { name: "AES-GCM" },
+    false,
+    ["encrypt", "decrypt"],
+  );
+
+  return { aesKey, iv };
+}
+
 function arrayBufferToBase64(buffer) {
   let binary = "";
   const bytes = new Uint8Array(buffer);
