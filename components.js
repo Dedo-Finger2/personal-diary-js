@@ -5,6 +5,7 @@ const RepositoryPlataformSelect = document.querySelector(
 );
 const RepositoryNameInput = document.querySelector("#repository-name");
 const BranchNameInput = document.querySelector("#branch-name");
+const UserNameInput = document.querySelector("#user-name");
 
 const EntriesCountSpan = document.querySelector("#entries-count");
 
@@ -15,4 +16,5 @@ export {
   RepositoryPlataformSelect,
   BranchNameInput,
   EntriesCountSpan,
+  UserNameInput,
 };

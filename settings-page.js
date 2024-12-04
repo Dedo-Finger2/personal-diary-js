@@ -4,6 +4,7 @@ import {
   RepositoryPlataformSelect,
   RepositoryNameInput,
   ApiKeyInput,
+  UserNameInput,
 } from "./components.js";
 import {
   convertKeyAndIVToBase64,
@@ -34,6 +35,7 @@ async function handleSettingsFormSubmition(event) {
       repositoryPlataform: RepositoryPlataformSelect.value,
       repositoryName: RepositoryNameInput.value,
       branchName: BranchNameInput.value,
+      userName: UserNameInput.value,
     };
 
     const missingSettings = [];
