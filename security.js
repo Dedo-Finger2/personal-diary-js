@@ -1,3 +1,15 @@
+export async function convertKeyAndIVToBase64(key, iv) {
+  const rawKey = await crypto.subtle.exportKey("raw", key);
+
+  const keyBase64 = btoa(String.fromCharCode(...new Uint8Array(rawKey)));
+  const ivBase64 = btoa(String.fromCharCode(iv));
+
+  return {
+    keyBase64,
+    ivBase64,
+  };
+}
+
 function arrayBufferToBase64(buffer) {
   let binary = "";
   const bytes = new Uint8Array(buffer);
