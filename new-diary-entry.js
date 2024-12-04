@@ -5,12 +5,13 @@ import {
   DiaryEntryBodyInput,
   EncryptOnSendCheckbox,
 } from "./components.js";
+import { storeDiaryEntry } from "./repository.js";
 
 /** @param { Event } event  */
-function handleNewDiaryEntrySubmit(event) {
+async function handleNewDiaryEntrySubmit(event) {
   event.preventDefault();
 
-  console.log(DiaryEntryTitleInput.value);
+  await storeDiaryEntry(DiaryEntryTitleInput.value, DiaryEntryBodyInput.value);
 }
 
 NewDiaryEntryForm.addEventListener("submit", handleNewDiaryEntrySubmit);
