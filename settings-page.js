@@ -5,7 +5,11 @@ import {
   RepositoryNameInput,
   ApiKeyInput,
 } from "./components.js";
-import { encryptData, getCryptoKey } from "./security.js";
+import {
+  convertKeyAndIVToBase64,
+  encryptData,
+  getCryptoKey,
+} from "./security.js";
 
 async function checkUserSettings() {
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
@@ -50,8 +54,13 @@ async function handleSettingsFormSubmition(event) {
 
     userSettings.apiKey = encryptedData;
 
+    const { keyBase64, ivBase64 } = await convertKeyAndIVToBase64(aesKey, iv);
+
     localStorage.setItem("userSettings", JSON.stringify(userSettings));
-    localStorage.setItem("encryptionKeys", JSON.stringify({ aesKey, iv }));
+    localStorage.setItem(
+      "encryptionKeys",
+      JSON.stringify({ keyBase64, ivBase64 }),
+    );
   } catch (error) {
     alert(error.message);
   }

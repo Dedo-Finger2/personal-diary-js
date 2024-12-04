@@ -6,10 +6,13 @@ const RepositoryPlataformSelect = document.querySelector(
 const RepositoryNameInput = document.querySelector("#repository-name");
 const BranchNameInput = document.querySelector("#branch-name");
 
+const EntriesCountSpan = document.querySelector("#entries-count");
+
 export {
   SettingsForm,
   ApiKeyInput,
   RepositoryNameInput,
   RepositoryPlataformSelect,
   BranchNameInput,
+  EntriesCountSpan,
 };
