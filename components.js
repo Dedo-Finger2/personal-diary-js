@@ -16,6 +16,8 @@ const DiaryEntryBodyInput = document.querySelector("#entry-body");
 const DiaryEntryCategoriesInput = document.querySelector("#entry-categories");
 const EncryptOnSendCheckbox = document.querySelector("#encrypt-on-send");
 
+const EntriesTable = document.querySelector("#entries-table");
+
 export {
   SettingsForm,
   ApiKeyInput,
@@ -30,4 +32,5 @@ export {
   DiaryEntryTitleInput,
   DiaryEntryCategoriesInput,
   EncryptOnSendCheckbox,
+  EntriesTable,
 };
