@@ -5,8 +5,6 @@ async function getEntriesCount() {
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
 
-  const owner = "Dedo-Finger2";
-
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
@@ -14,7 +12,7 @@ async function getEntriesCount() {
   );
 
   const response = await fetch(
-    `https://api.github.com/repos/${owner}/${userSettings.repositoryName}/contents/.`,
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/.`,
     {
       method: "GET",
       headers: {
