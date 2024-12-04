@@ -5,47 +5,7 @@ import {
   RepositoryNameInput,
   ApiKeyInput,
 } from "./components.js";
-
-async function encryptData(key, iv, data) {
-  const encoder = new TextEncoder();
-  const encodedData = encoder.encode(data);
-  const encryptedData = await crypto.subtle.encrypt(
-    {
-      name: "AES-GCM",
-      iv: iv,
-    },
-    key,
-    encodedData,
-  );
-  return encryptedData;
-}
-
-export async function decryptData(key, iv, encryptedData) {
-  const decryptedBuffer = await crypto.subtle.decrypt(
-    {
-      name: "AES-GCM",
-      iv: iv,
-    },
-    key,
-    encryptedData,
-  );
-
-  const decryptedData = new TextDecoder().decode(decryptedBuffer);
-  return decryptedData;
-}
-
-async function getCryptoKey() {
-  const aesKey = await crypto.subtle.generateKey(
-    {
-      name: "AES-GCM",
-      length: 256,
-    },
-    true,
-    ["encrypt", "decrypt"],
-  );
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  return { aesKey, iv };
-}
+import { encryptData, getCryptoKey } from "./security.js";
 
 async function checkUserSettings() {
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
@@ -91,6 +51,7 @@ async function handleSettingsFormSubmition(event) {
     userSettings.apiKey = encryptedData;
 
     localStorage.setItem("userSettings", JSON.stringify(userSettings));
+    localStorage.setItem("encryptionKeys", JSON.stringify({ aesKey, iv }));
   } catch (error) {
     alert(error.message);
   }
