@@ -11,7 +11,7 @@ export async function convertKeyAndIVToBase64(key, iv) {
 }
 
 export async function getKeyAndIVFromLocalStorage() {
-  const cryptoKeys = localStorage.getItem("encryptionKeys");
+  const cryptoKeys = JSON.parse(localStorage.getItem("encryptionKeys"));
 
   if (!cryptoKeys.keyBase64 || !cryptoKeys.ivBase64) {
     throw new Error("AES Key or IV not found.");
