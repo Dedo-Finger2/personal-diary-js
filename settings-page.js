@@ -5,6 +5,7 @@ import {
   RepositoryNameInput,
   ApiKeyInput,
   UserNameInput,
+  UserEmailInput,
 } from "./components.js";
 import {
   convertKeyAndIVToBase64,
@@ -20,6 +21,8 @@ async function checkUserSettings() {
     RepositoryPlataformSelect.value = userSettings.repositoryPlataform;
     RepositoryNameInput.value = userSettings.repositoryName;
     BranchNameInput.value = userSettings.branchName;
+    UserNameInput.value = userSettings.userName;
+    UserEmailInput.value = userSettings.userEmail;
   }
 }
 
@@ -36,6 +39,7 @@ async function handleSettingsFormSubmition(event) {
       repositoryName: RepositoryNameInput.value,
       branchName: BranchNameInput.value,
       userName: UserNameInput.value,
+      userEmail: UserEmailInput.value,
     };
 
     const missingSettings = [];
