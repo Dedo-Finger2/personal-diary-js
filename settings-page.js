@@ -20,7 +20,7 @@ async function encryptData(key, iv, data) {
   return encryptedData;
 }
 
-async function decryptData(key, iv, encryptedData) {
+export async function decryptData(key, iv, encryptedData) {
   const decryptedBuffer = await crypto.subtle.decrypt(
     {
       name: "AES-GCM",
