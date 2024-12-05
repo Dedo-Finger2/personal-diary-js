@@ -17,12 +17,6 @@ async function populateTable() {
     const titleTd = document.createElement("td");
     titleTd.textContent = file.name;
 
-    const createdAtTd = document.createElement("td");
-    createdAtTd.textContent = "2 days ago";
-
-    const categoriesTd = document.createElement("td");
-    categoriesTd.textContent = "None";
-
     const actionsTd = document.createElement("td");
 
     const viewBtn = document.createElement("a");
@@ -53,8 +47,6 @@ async function populateTable() {
     actionsTd.appendChild(deleteBtn);
 
     tr.appendChild(titleTd);
-    tr.appendChild(createdAtTd);
-    tr.appendChild(categoriesTd);
     tr.appendChild(actionsTd);
 
     EntriesTable.appendChild(tr);

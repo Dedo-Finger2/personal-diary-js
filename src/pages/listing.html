@@ -1,69 +1,69 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diary - All Entries</title>
-    <script src="./../modules/all-entries.js" defer type="module"></script>
-  </head>
 
-  <body>
-    <main id="main-content-wrapper">
-      <div id="sidebar-wrapper">
-        <ul id="sidebar-items-wrapper">
-          <li id="sidebar-item">
-            <a href="index.html">Home</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="create.html">New Diary Entry</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="listing.html">All Entries</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="settings.html">Settings</a>
-          </li>
-        </ul>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary - All Entries</title>
+  <script src="./../modules/all-entries.js" defer type="module"></script>
+</head>
+
+<body>
+  <main id="main-content-wrapper">
+    <div id="sidebar-wrapper">
+      <ul id="sidebar-items-wrapper">
+        <li id="sidebar-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="create.html">New Diary Entry</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="listing.html">All Entries</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="settings.html">Settings</a>
+        </li>
+      </ul>
+    </div>
+
+    <dialog id="confirm-action-modal" purpose="">
+      <div>
+        <span id="confirm-action-modal-icon">🥓</span>
+        <span id="confirm-action-modal-title"></span>
       </div>
-
-      <dialog id="confirm-action-modal" purpose="">
-        <div>
-          <span id="confirm-action-modal-icon">🥓</span>
-          <span id="confirm-action-modal-title"></span>
-        </div>
-        <p id="confirm-action-modal-body"></p>
-        <div id="confirm-action-modal-action-buttons">
-          <button id="modal-confirm">Confirm</button>
-          <button id="modal-close">Cancel</button>
-        </div>
-      </dialog>
-
-      <div id="title-wrapper">
-        <h1>All Entries</h1>
-        <hr />
+      <p id="confirm-action-modal-body"></p>
+      <div id="confirm-action-modal-action-buttons">
+        <button id="modal-confirm">Confirm</button>
+        <button id="modal-close">Cancel</button>
       </div>
+    </dialog>
 
-      <div id="entries-wrapper">
-        <div id="entries-top-bar-wrapper">
-          <input type="text" name="search" id="search" />
-          <select name="categories" id="categories">
-            <option value="testing">Testing</option>
-            <option value="testing">Testing</option>
-            <option value="testing">Testing</option>
-          </select>
-          <input type="date" name="createdDate" id="created-date" />
-        </div>
-        <div id="entries-table-wrapper">
-          <table id="entries-table">
-            <tr>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Categories</th>
-              <th>Actions</th>
-            </tr>
-          </table>
-        </div>
+    <div id="title-wrapper">
+      <h1>All Entries</h1>
+      <hr />
+    </div>
+
+    <div id="entries-wrapper">
+      <div id="entries-top-bar-wrapper">
+        <input type="text" name="search" id="search" />
+        <select name="categories" id="categories">
+          <option value="testing">Testing</option>
+          <option value="testing">Testing</option>
+          <option value="testing">Testing</option>
+        </select>
+        <input type="date" name="createdDate" id="created-date" />
       </div>
-    </main>
-  </body>
+      <div id="entries-table-wrapper">
+        <table id="entries-table">
+          <tr>
+            <th>Title</th>
+            <th>Actions</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>
