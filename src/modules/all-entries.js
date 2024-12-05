@@ -6,7 +6,7 @@ import {
   ConfirmActionModalCancelButton,
   ConfirmActionModalTitleSpan,
 } from "./../components/all-diary-entries.components.js";
-import { getAllFiles } from "./../model/repository.js";
+import { deleteFile, getAllFiles } from "./../model/repository.js";
 
 async function populateTable() {
   const files = await getAllFiles();
@@ -27,7 +27,7 @@ async function populateTable() {
 
     const viewBtn = document.createElement("a");
     viewBtn.classList.add("entry-action-btn");
-    viewBtn.id = "view-diary-entry";
+    viewBtn.classList.add("view-diary-entry");
     viewBtn.href = `show.html?path=${file.path}`;
     viewBtn.textContent = "View";
     viewBtn.setAttribute("file-path", file.path);
@@ -35,7 +35,7 @@ async function populateTable() {
 
     const editBtn = document.createElement("a");
     editBtn.classList.add("entry-action-btn");
-    editBtn.id = "edit-diary-entry";
+    editBtn.classList.add("edit-diary-entry");
     editBtn.href = `edit.html?path=${file.path}`;
     editBtn.textContent = "Edit";
     editBtn.setAttribute("file-path", file.path);
@@ -43,7 +43,7 @@ async function populateTable() {
 
     const deleteBtn = document.createElement("a");
     deleteBtn.classList.add("entry-action-btn");
-    deleteBtn.id = "delete-diary-entry";
+    deleteBtn.classList.add("delete-diary-entry");
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute("file-path", file.path);
     deleteBtn.setAttribute("sha", file.sha);
@@ -76,17 +76,22 @@ function handleDeleteDiaryentry() {
   await populateTable();
 
   // Needs to be here cause the buttons are created by JS
-  const DeleteDiaryEntryButton = document.querySelector("#delete-diary-entry");
-  const ViewDiaryEntryButton = document.querySelector("#view-diary-entry");
-  const EditDiaryEntryButton = document.querySelector("#edit-diary-entry");
+  const DeleteDiaryEntryButtons = document.querySelectorAll(
+    ".delete-diary-entry",
+  );
 
   DeleteDiaryEntryButton.addEventListener("click", handleDeleteDiaryentry);
 
-  ConfirmActionModalConfirmButton.addEventListener("click", () => {
+  ConfirmActionModalConfirmButton.addEventListener("click", async () => {
     const dialogPurpose = ConfirmActionModalDialog.getAttribute("purpose");
+    const filePath = DeleteDiaryEntryButton.getAttribute("file-path");
+    const fileSHA = DeleteDiaryEntryButton.getAttribute("sha");
+
     switch (dialogPurpose) {
       case "DELETE-DIARY-ENTRY":
-        console.log("Eba");
+        await deleteFile(filePath, fileSHA);
+        ConfirmActionModalDialog.close();
+        alert("file deleted.");
         break;
       default:
         alert("Something went wrong!");
