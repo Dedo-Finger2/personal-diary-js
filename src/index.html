@@ -1,40 +1,41 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diary</title>
-    <link rel="stylesheet" href="main.css" />
-    <script src="main.js" type="module" defer></script>
-  </head>
 
-  <body>
-    <main id="main-content-wrapper">
-      <div id="sidebar-wrapper">
-        <ul id="sidebar-items-wrapper">
-          <li id="sidebar-item">
-            <a href="index.html">Home</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="new-diary-entry.html">New Diary Entry</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="all-entries.html">All Entries</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="settings.html">Settings</a>
-          </li>
-        </ul>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary</title>
+  <script src="./modules/main.js" type="module" defer></script>
+</head>
+
+<body>
+  <main id="main-content-wrapper">
+    <div id="sidebar-wrapper">
+      <ul id="sidebar-items-wrapper">
+        <li id="sidebar-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="new-diary-entry.html">New Diary Entry</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="all-entries.html">All Entries</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="settings.html">Settings</a>
+        </li>
+      </ul>
+    </div>
+    <div id="content-body-wrapper">
+      <h1>Welcome to your personal diary</h1>
+      <hr />
+    </div>
+    <div id="info-cards">
+      <div class="info-card" id="entries-count-wrapper">
+        <span id="entries-count">loading...</span>
       </div>
-      <div id="content-body-wrapper">
-        <h1>Welcome to your personal diary</h1>
-        <hr />
-      </div>
-      <div id="info-cards">
-        <div class="info-card" id="entries-count-wrapper">
-          <span id="entries-count">loading...</span>
-        </div>
-      </div>
-    </main>
-  </body>
+    </div>
+  </main>
+</body>
+
 </html>

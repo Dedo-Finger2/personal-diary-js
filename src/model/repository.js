@@ -1,4 +1,7 @@
-import { decryptData, getKeyAndIVFromLocalStorage } from "./security.js";
+import {
+  decryptData,
+  getKeyAndIVFromLocalStorage,
+} from "./../utils/security.js";
 
 export async function getAllFiles() {
   /**

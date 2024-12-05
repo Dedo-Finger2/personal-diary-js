@@ -1,5 +1,5 @@
 import { EntriesCountSpan } from "./../components/home.components.js";
-import * as repository from "./repository.js";
+import * as repository from "./../model/repository.js";
 
 async function getEntriesCount() {
   const files = await repository.getAllFiles();
