@@ -199,3 +199,38 @@ export async function deleteFile(path, sha) {
     throw new Error("Failed to delete file.");
   }
 }
+
+export async function getFileContent(path) {
+  const userSettings = JSON.parse(localStorage.getItem("userSettings"));
+  const cryptoKeys = await getKeyAndIVFromLocalStorage();
+
+  const userApiKey = await decryptData(
+    cryptoKeys.aesKey,
+    cryptoKeys.iv,
+    userSettings.apiKey,
+  );
+
+  const response = await fetch(
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${userApiKey}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        Accept: "application/vnd.github+json",
+      },
+    },
+  );
+
+  const requestDidNotSucceded = !response.ok;
+
+  if (requestDidNotSucceded) {
+    console.error(response.status);
+    console.error(await response.json());
+    throw new Error("Failed to delete file.");
+  }
+
+  const file = await response.json();
+
+  return file.content;
+}
