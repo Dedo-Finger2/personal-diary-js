@@ -1,10 +1,8 @@
 import {
   NewDiaryEntryForm,
-  DiaryEntryCategoriesInput,
   DiaryEntryTitleInput,
   DiaryEntryBodyInput,
-  EncryptOnSendCheckbox,
-} from "./components.js";
+} from "./../components/create-diary-entry.components.js";
 import { storeDiaryEntry } from "./repository.js";
 
 /** @param { Event } event  */

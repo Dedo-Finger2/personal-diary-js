@@ -1,4 +1,4 @@
-import { EntriesCountSpan } from "./components.js";
+import { EntriesCountSpan } from "./../components/home.components.js";
 import * as repository from "./repository.js";
 
 async function getEntriesCount() {

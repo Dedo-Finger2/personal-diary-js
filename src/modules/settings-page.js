@@ -6,12 +6,12 @@ import {
   ApiKeyInput,
   UserNameInput,
   UserEmailInput,
-} from "./components.js";
+} from "./../components/settings.components.js";
 import {
   convertKeyAndIVToBase64,
   encryptData,
   getCryptoKey,
-} from "./security.js";
+} from "./../utils/security.js";
 
 async function checkUserSettings() {
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));

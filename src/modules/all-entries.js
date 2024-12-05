@@ -1,4 +1,4 @@
-import { EntriesTable } from "./components.js";
+import { EntriesTable } from "./../components/all-diary-entries.components.js";
 import { getAllFiles } from "./repository.js";
 
 async function populateTable() {
