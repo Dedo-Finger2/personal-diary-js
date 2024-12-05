@@ -30,7 +30,7 @@ async function populateTable() {
     const editBtn = document.createElement("a");
     editBtn.classList.add("entry-action-btn");
     editBtn.classList.add("edit-diary-entry");
-    editBtn.href = `edit.html?path=${file.path}`;
+    editBtn.href = `edit.html?path=${file.path}&sha=${file.sha}`;
     editBtn.textContent = "Edit";
     editBtn.setAttribute("file-path", file.path);
     editBtn.setAttribute("sha", file.sha);
