@@ -103,3 +103,60 @@ export async function storeDiaryEntry(title, body, categories) {
 
   alert("file created!");
 }
+
+export async function getFile(path) {
+  /**
+   * @typedef { Object } FileWithContent
+   * @property { string } name
+   * @property { string } extension
+   * @property { string } sha
+   * @property { string } url
+   * @property { string } type
+   * @property { string } content
+   * @property { number } size
+   */
+
+  const userSettings = JSON.parse(localStorage.getItem("userSettings"));
+  const cryptoKeys = await getKeyAndIVFromLocalStorage();
+
+  const userApiKey = await decryptData(
+    cryptoKeys.aesKey,
+    cryptoKeys.iv,
+    userSettings.apiKey,
+  );
+
+  const response = await fetch(
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${userApiKey}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        Accept: "application/vnd.github+json",
+      },
+    },
+  );
+
+  const requestDidNotSucceded = !response.ok;
+
+  if (requestDidNotSucceded) {
+    console.error(response.status);
+    console.error(await response.json());
+    throw new Error("Failed to create file.");
+  }
+
+  const file = await response.json();
+
+  /** @type { FileWithContent } */
+  const formatedFile = {
+    name: file.name.split(".")[0],
+    extension: file.name.split(".")[1] ?? "no extension",
+    sha: file.sha,
+    url: file.html_url,
+    content: file.content,
+    size: file.size,
+    type: file.type,
+  };
+
+  return formatedFile;
+}
