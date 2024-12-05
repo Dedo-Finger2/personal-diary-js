@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary - Page</title>
+  <script src="./../modules/show.js" type="module" defer></script>
+</head>
+
+<body>
+  <main id="main-content-wrapper">
+    <div id="sidebar-wrapper">
+      <ul id="sidebar-items-wrapper">
+        <li id="sidebar-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="create.html">New Diary Entry</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="listing.html">All Entries</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="settings.html">Settings</a>
+        </li>
+      </ul>
+    </div>
+    <div id="content-body-wrapper">
+      <h1 id="diary-entry-title"></h1>
+      <hr />
+    </div>
+    <div id="diary-entry-content-wrapper">
+      <div id="diary-entry-categories"></div>
+      <textarea id="diary-entry-body" readonly></textarea>
+    </div>
+  </main>
+</body>
+
+</html>
