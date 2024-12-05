@@ -3,5 +3,11 @@ const DiaryEntryCategoriesDiv = document.querySelector(
   "#diary-entry-categories",
 );
 const DiaryEntryBodyTextarea = document.querySelector("#diary-entry-body");
+const RevealContentCheckbox = document.querySelector("#reveal-content");
 
-export { DiaryEntryTitleH1, DiaryEntryCategoriesDiv, DiaryEntryBodyTextarea };
+export {
+  DiaryEntryTitleH1,
+  DiaryEntryCategoriesDiv,
+  DiaryEntryBodyTextarea,
+  RevealContentCheckbox,
+};
