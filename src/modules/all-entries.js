@@ -61,17 +61,6 @@ async function populateTable() {
   }
 }
 
-function handleDeleteDiaryentry() {
-  ConfirmActionModalTitleSpan.textContent =
-    "Are you sure you want to delete this diary entry?";
-  ConfirmActionModalBodyParagraph.textContent =
-    "This action is not reversable!";
-
-  ConfirmActionModalDialog.showModal();
-
-  ConfirmActionModalDialog.setAttribute("purpose", "DELETE-DIARY-ENTRY");
-}
-
 (async () => {
   await populateTable();
 
@@ -80,12 +69,30 @@ function handleDeleteDiaryentry() {
     ".delete-diary-entry",
   );
 
-  DeleteDiaryEntryButton.addEventListener("click", handleDeleteDiaryentry);
+  DeleteDiaryEntryButtons.forEach((DeleteDiaryEntryButton) => {
+    DeleteDiaryEntryButton.addEventListener("click", () => {
+      ConfirmActionModalTitleSpan.textContent =
+        "Are you sure you want to delete this diary entry?";
+      ConfirmActionModalBodyParagraph.textContent =
+        "This action is not reversable!";
+
+      ConfirmActionModalDialog.showModal();
+
+      ConfirmActionModalDialog.setAttribute("purpose", "DELETE-DIARY-ENTRY");
+
+      const filePath = DeleteDiaryEntryButton.getAttribute("file-path");
+      const fileSHA = DeleteDiaryEntryButton.getAttribute("sha");
+
+      ConfirmActionModalDialog.setAttribute("selected-file-path", filePath);
+      ConfirmActionModalDialog.setAttribute("selected-file-sha", fileSHA);
+    });
+  });
 
   ConfirmActionModalConfirmButton.addEventListener("click", async () => {
     const dialogPurpose = ConfirmActionModalDialog.getAttribute("purpose");
-    const filePath = DeleteDiaryEntryButton.getAttribute("file-path");
-    const fileSHA = DeleteDiaryEntryButton.getAttribute("sha");
+    const filePath =
+      ConfirmActionModalDialog.getAttribute("selected-file-path");
+    const fileSHA = ConfirmActionModalDialog.getAttribute("selected-file-sha");
 
     switch (dialogPurpose) {
       case "DELETE-DIARY-ENTRY":
