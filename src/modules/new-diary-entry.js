@@ -3,7 +3,7 @@ import {
   DiaryEntryTitleInput,
   DiaryEntryBodyInput,
 } from "./../components/create-diary-entry.components.js";
-import { storeDiaryEntry } from "./repository.js";
+import { storeDiaryEntry } from "./../model/repository.js";
 
 /** @param { Event } event  */
 async function handleNewDiaryEntrySubmit(event) {

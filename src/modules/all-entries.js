@@ -1,5 +1,5 @@
 import { EntriesTable } from "./../components/all-diary-entries.components.js";
-import { getAllFiles } from "./repository.js";
+import { getAllFiles } from "./../model/repository.js";
 
 async function populateTable() {
   const files = await getAllFiles();

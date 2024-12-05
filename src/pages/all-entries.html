@@ -1,58 +1,59 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diary - All Entries</title>
-    <link rel="stylesheet" href="main.css" />
-    <script src="all-entries.js" defer type="module"></script>
-  </head>
 
-  <body>
-    <main id="main-content-wrapper">
-      <div id="sidebar-wrapper">
-        <ul id="sidebar-items-wrapper">
-          <li id="sidebar-item">
-            <a href="index.html">Home</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="new-diary-entry.html">New Diary Entry</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="all-entries.html">All Entries</a>
-          </li>
-          <li id="sidebar-item">
-            <a href="settings.html">Settings</a>
-          </li>
-        </ul>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary - All Entries</title>
+  <script src="./../modules/all-entries.js" defer type="module"></script>
+</head>
 
-      <div id="title-wrapper">
-        <h1>All Entries</h1>
-        <hr />
-      </div>
+<body>
+  <main id="main-content-wrapper">
+    <div id="sidebar-wrapper">
+      <ul id="sidebar-items-wrapper">
+        <li id="sidebar-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="new-diary-entry.html">New Diary Entry</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="all-entries.html">All Entries</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="settings.html">Settings</a>
+        </li>
+      </ul>
+    </div>
 
-      <div id="entries-wrapper">
-        <div id="entries-top-bar-wrapper">
-          <input type="text" name="search" id="search" />
-          <select name="categories" id="categories">
-            <option value="testing">Testing</option>
-            <option value="testing">Testing</option>
-            <option value="testing">Testing</option>
-          </select>
-          <input type="date" name="createdDate" id="created-date" />
-        </div>
-        <div id="entries-table-wrapper">
-          <table id="entries-table">
-            <tr>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Categories</th>
-              <th>Actions</th>
-            </tr>
-          </table>
-        </div>
+    <div id="title-wrapper">
+      <h1>All Entries</h1>
+      <hr />
+    </div>
+
+    <div id="entries-wrapper">
+      <div id="entries-top-bar-wrapper">
+        <input type="text" name="search" id="search" />
+        <select name="categories" id="categories">
+          <option value="testing">Testing</option>
+          <option value="testing">Testing</option>
+          <option value="testing">Testing</option>
+        </select>
+        <input type="date" name="createdDate" id="created-date" />
       </div>
-    </main>
-  </body>
+      <div id="entries-table-wrapper">
+        <table id="entries-table">
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Categories</th>
+            <th>Actions</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>
