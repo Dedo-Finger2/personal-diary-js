@@ -20,18 +20,21 @@ async function populateTable() {
 
     const viewBtn = document.createElement("a");
     viewBtn.classList.add("entry-action-btn");
+    viewBtn.id = "view-diary-entry";
     viewBtn.href = `show.html?path=${file.path}`;
     viewBtn.textContent = "View";
     viewBtn.setAttribute("file-path", file.path);
 
     const editBtn = document.createElement("a");
     editBtn.classList.add("entry-action-btn");
+    editBtn.id = "edit-diary-entry";
     editBtn.href = `edit.html?path=${file.path}`;
     editBtn.textContent = "Edit";
     editBtn.setAttribute("file-path", file.path);
 
     const deleteBtn = document.createElement("a");
     deleteBtn.classList.add("entry-action-btn");
+    deleteBtn.id = "delete-diary-entry";
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute("file-path", file.path);
 
