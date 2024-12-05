@@ -88,7 +88,7 @@ export async function storeDiaryEntry(title, body, categories) {
           name: userSettings.userName,
           email: userSettings.userEmail,
         },
-        content: btoa(body),
+        content: btoa(String.fromCharCode(...new TextEncoder().encode(body))),
       }),
     },
   );
