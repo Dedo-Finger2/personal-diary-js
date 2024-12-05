@@ -18,17 +18,19 @@ async function populateTable() {
 
     const actionsTd = document.createElement("td");
 
-    const viewBtn = document.createElement("button");
+    const viewBtn = document.createElement("a");
     viewBtn.classList.add("entry-action-btn");
+    viewBtn.href = `show.html?path=${file.path}`;
     viewBtn.textContent = "View";
     viewBtn.setAttribute("file-path", file.path);
 
-    const editBtn = document.createElement("button");
+    const editBtn = document.createElement("a");
     editBtn.classList.add("entry-action-btn");
+    editBtn.href = `edit.html?path=${file.path}`;
     editBtn.textContent = "Edit";
     editBtn.setAttribute("file-path", file.path);
 
-    const deleteBtn = document.createElement("button");
+    const deleteBtn = document.createElement("a");
     deleteBtn.classList.add("entry-action-btn");
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute("file-path", file.path);
