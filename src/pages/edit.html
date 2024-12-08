@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary - Edit Page</title>
+  <script src="./../modules/edit.js" type="module" defer></script>
+</head>
+
+<body>
+  <main id="main-content-wrapper">
+    <div id="sidebar-wrapper">
+      <ul id="sidebar-items-wrapper">
+        <li id="sidebar-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="create.html">New Diary Entry</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="listing.html">All Entries</a>
+        </li>
+        <li id="sidebar-item">
+          <a href="settings.html">Settings</a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="diary-entry-content-wrapper">
+      <div class="checkbox-label-container">
+        <input type="checkbox" id="reveal-content" />
+        <label for="reveal-content">Reveal Content</label>
+      </div>
+
+      <form id="edit-diary-entry-form">
+        <div class="input-label-container">
+          <label for="diary-entry-title">Title:</label>
+          <input type="text" id="diary-entry-title" name="title" placeholder="loading..." disabled />
+        </div>
+        <div class="input-label-container">
+          <label for="diary-entry-title">Body:</label>
+          <textarea name="body" id="diary-entry-body" placeholder="loading..." disabled revealed="false"></textarea>
+        </div>
+
+        <button type="submit">Save edits</button>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>

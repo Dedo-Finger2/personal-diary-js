@@ -234,3 +234,48 @@ export async function getFileContent(path) {
 
   return file.content;
 }
+
+export async function updateFileContent(newContent, path, sha) {
+  const userSettings = JSON.parse(localStorage.getItem("userSettings"));
+  const cryptoKeys = await getKeyAndIVFromLocalStorage();
+
+  const userApiKey = await decryptData(
+    cryptoKeys.aesKey,
+    cryptoKeys.iv,
+    userSettings.apiKey,
+  );
+
+  const fileName = path.split(".")[0];
+
+  const response = await fetch(
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${userApiKey}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sha,
+        message: `edits ${fileName}`,
+        committer: {
+          name: userSettings.userName,
+          email: userSettings.userEmail,
+        },
+        content: btoa(
+          String.fromCharCode(...new TextEncoder().encode(newContent)),
+        ),
+      }),
+    },
+  );
+
+  const requestDidNotSucceded = !response.ok;
+
+  if (requestDidNotSucceded) {
+    console.error(response.status);
+    console.error(await response.json());
+    throw new Error("Failed to update file.");
+  }
+}
