@@ -5,6 +5,10 @@ import {
   ConfirmActionModalConfirmButton,
   ConfirmActionModalCancelButton,
   ConfirmActionModalTitleSpan,
+  SearchInput,
+  PaginationNextPageButton,
+  PaginationPreviousPageButton,
+  PaginationPageNumberSpan,
 } from "./../components/all-diary-entries.components.js";
 import { deleteFile, getAllFiles } from "./../model/repository.js";
 
@@ -54,6 +58,17 @@ async function populateTable() {
 }
 
 (async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentPage = urlParams.get("page") ?? 1;
+
+  PaginationNextPageButton.href = `listing.html?page=${Number(currentPage) + 1}`;
+  PaginationPreviousPageButton.href = `listing.html?page=${Number(currentPage) - 1}`;
+  PaginationPageNumberSpan.textContent = currentPage ?? 1;
+
+  if (!currentPage || Number(currentPage) <= 1) {
+    PaginationPreviousPageButton.href = "";
+  }
+
   await populateTable();
 
   // Needs to be here cause the buttons are created by JS
@@ -97,6 +112,8 @@ async function populateTable() {
     }
   });
 })();
+
+PaginationNextPageButton.addEventListener("click", () => {});
 
 ConfirmActionModalCancelButton.addEventListener("click", () =>
   ConfirmActionModalDialog.close(),

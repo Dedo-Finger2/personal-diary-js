@@ -14,6 +14,13 @@ const ConfirmActionModalBodyParagraph = document.querySelector(
 const ConfirmActionModalIcon = document.querySelector(
   "#confirm-action-modal-icon",
 );
+const SearchInput = document.querySelector("#search");
+const SearchTypeSelect = document.querySelector("#search-types");
+const PaginationPageNumberSpan = document.querySelector("#page-number");
+const PaginationNextPageButton = document.querySelector("#pagination-next");
+const PaginationPreviousPageButton = document.querySelector(
+  "#pagination-previous",
+);
 
 export {
   EntriesTable,
@@ -23,4 +30,9 @@ export {
   ConfirmActionModalTitleSpan,
   ConfirmActionModalBodyParagraph,
   ConfirmActionModalIcon,
+  SearchInput,
+  SearchTypeSelect,
+  PaginationPageNumberSpan,
+  PaginationNextPageButton,
+  PaginationPreviousPageButton,
 };
