@@ -15,13 +15,14 @@ export async function getAllFiles({ currentPage, itemsPerPage }) {
    * @property { string } sha
    */
 
+  const userApiKeyLocalStorage = localStorage.getItem("userAPIKey");
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
 
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
-    userSettings.apiKey,
+    userApiKeyLocalStorage.replaceAll('"', ""),
   );
 
   const response = await fetch(

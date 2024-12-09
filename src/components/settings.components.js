@@ -7,6 +7,7 @@ const RepositoryNameInput = document.querySelector("#repository-name");
 const BranchNameInput = document.querySelector("#branch-name");
 const UserNameInput = document.querySelector("#user-name");
 const UserEmailInput = document.querySelector("#email");
+const SaveAPIKeyButton = document.querySelector("#save-api-key");
 
 export {
   SettingsForm,
@@ -16,4 +17,5 @@ export {
   BranchNameInput,
   UserNameInput,
   UserEmailInput,
+  SaveAPIKeyButton,
 };

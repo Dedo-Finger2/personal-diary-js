@@ -6,6 +6,7 @@ import {
   ApiKeyInput,
   UserNameInput,
   UserEmailInput,
+  SaveAPIKeyButton,
 } from "./../components/settings.components.js";
 import {
   convertKeyAndIVToBase64,
@@ -15,9 +16,10 @@ import {
 
 async function checkUserSettings() {
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
+  const apiKey = localStorage.getItem("userAPIKey");
 
   if (userSettings) {
-    ApiKeyInput.value = userSettings.apiKey;
+    ApiKeyInput.value = apiKey.replaceAll('"', "");
     RepositoryPlataformSelect.value = userSettings.repositoryPlataform;
     RepositoryNameInput.value = userSettings.repositoryName;
     BranchNameInput.value = userSettings.branchName;
@@ -34,7 +36,6 @@ async function handleSettingsFormSubmition(event) {
 
   try {
     const userSettings = {
-      apiKey: ApiKeyInput.value,
       repositoryPlataform: RepositoryPlataformSelect.value,
       repositoryName: RepositoryNameInput.value,
       branchName: BranchNameInput.value,
@@ -55,18 +56,7 @@ async function handleSettingsFormSubmition(event) {
       );
     }
 
-    const { aesKey, iv } = await getCryptoKey();
-    const encryptedData = await encryptData(aesKey, iv, userSettings.apiKey);
-
-    userSettings.apiKey = encryptedData;
-
-    const { keyBase64, ivBase64 } = await convertKeyAndIVToBase64(aesKey, iv);
-
     localStorage.setItem("userSettings", JSON.stringify(userSettings));
-    localStorage.setItem(
-      "encryptionKeys",
-      JSON.stringify({ keyBase64, ivBase64 }),
-    );
   } catch (error) {
     alert(error.message);
   }
@@ -74,6 +64,21 @@ async function handleSettingsFormSubmition(event) {
 
 window.addEventListener("load", (_event) => {
   checkUserSettings();
+});
+
+SaveAPIKeyButton.addEventListener("click", async () => {
+  const newAPIKey = ApiKeyInput.value;
+
+  const { aesKey, iv } = await getCryptoKey();
+  const encryptedData = await encryptData(aesKey, iv, newAPIKey);
+
+  const { keyBase64, ivBase64 } = await convertKeyAndIVToBase64(aesKey, iv);
+
+  localStorage.setItem("userAPIKey", JSON.stringify(encryptedData));
+  localStorage.setItem(
+    "encryptionKeys",
+    JSON.stringify({ keyBase64, ivBase64 }),
+  );
 });
 
 SettingsForm.addEventListener("submit", handleSettingsFormSubmition);
