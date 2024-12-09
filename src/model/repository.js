@@ -3,7 +3,7 @@ import {
   getKeyAndIVFromLocalStorage,
 } from "./../utils/security.js";
 
-export async function getAllFiles() {
+export async function getAllFiles({ currentPage, itemsPerPage }) {
   /**
    * @typedef { Object } File
    * @property { string } name
@@ -57,7 +57,21 @@ export async function getAllFiles() {
     });
   }
 
-  return files;
+  let totalPages = 0;
+  let paginatedFiles = files;
+
+  if (itemsPerPage) {
+    totalPages = Math.ceil(files.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    paginatedFiles = files.slice(startIndex, endIndex);
+  }
+
+  return {
+    files: paginatedFiles,
+    totalPages,
+    currentPage: currentPage ?? 0,
+  };
 }
 
 export async function storeDiaryEntry(title, body, categories) {

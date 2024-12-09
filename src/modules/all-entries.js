@@ -6,14 +6,18 @@ import {
   ConfirmActionModalCancelButton,
   ConfirmActionModalTitleSpan,
   SearchInput,
+  SearchTypeSelect,
   PaginationNextPageButton,
   PaginationPreviousPageButton,
   PaginationPageNumberSpan,
 } from "./../components/all-diary-entries.components.js";
 import { deleteFile, getAllFiles } from "./../model/repository.js";
 
-async function populateTable() {
-  const files = await getAllFiles();
+async function populateTable({ currentPage, itemsPerPage }) {
+  const { files, totalPages } = await getAllFiles({
+    currentPage,
+    itemsPerPage,
+  });
 
   for (const file of files) {
     const tr = document.createElement("tr");
@@ -55,6 +59,8 @@ async function populateTable() {
 
     EntriesTable.appendChild(tr);
   }
+
+  return totalPages;
 }
 
 (async () => {
@@ -63,13 +69,21 @@ async function populateTable() {
 
   PaginationNextPageButton.href = `listing.html?page=${Number(currentPage) + 1}`;
   PaginationPreviousPageButton.href = `listing.html?page=${Number(currentPage) - 1}`;
-  PaginationPageNumberSpan.textContent = currentPage ?? 1;
+
+  const totalPages = await populateTable({
+    currentPage: Number(currentPage),
+    itemsPerPage: 5,
+  });
 
   if (!currentPage || Number(currentPage) <= 1) {
     PaginationPreviousPageButton.href = "";
   }
 
-  await populateTable();
+  if (Number(currentPage) >= totalPages) {
+    PaginationNextPageButton.href = "";
+  }
+
+  PaginationPageNumberSpan.textContent = currentPage + " of " + totalPages;
 
   // Needs to be here cause the buttons are created by JS
   const DeleteDiaryEntryButtons = document.querySelectorAll(
