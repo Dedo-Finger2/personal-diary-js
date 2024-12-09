@@ -75,6 +75,26 @@ async function populateTable({ currentPage, itemsPerPage }) {
     itemsPerPage: 5,
   });
 
+  SearchInput.addEventListener("input", (event) => {
+    const inputValue = event.target.value;
+
+    const tableRows = document.querySelectorAll("tr");
+
+    for (const row of tableRows) {
+      row.classList.remove("hidden");
+    }
+
+    if (inputValue !== "") {
+      for (const row of tableRows) {
+        if (row.innerText.includes("Title\tActions")) continue;
+        const fileText = row.innerText.split("\t")[0];
+        if (!fileText.toUpperCase().includes(inputValue.toUpperCase())) {
+          row.classList.add("hidden");
+        }
+      }
+    }
+  });
+
   if (!currentPage || Number(currentPage) <= 1) {
     PaginationPreviousPageButton.href = "";
   }
