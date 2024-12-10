@@ -1,3 +1,4 @@
+import { UpdateFileContentGithubRepository } from "../model/GitHub/UpdateFileContent.repository.js";
 import { getFileContent, updateFileContent } from "../model/repository.js";
 import {
   EditDiaryEntryForm,
@@ -49,7 +50,11 @@ async function handleEditFormSubmit(event) {
 
   const newContent = event.target.body.value;
 
-  await updateFileContent(newContent, filePath, fileSha);
+  await new UpdateFileContentGithubRepository(localStorage).execute({
+    content: newContent,
+    path: filePath,
+    sha: fileSha,
+  });
 
   alert("File updated!");
 }
