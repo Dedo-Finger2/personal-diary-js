@@ -1,3 +1,4 @@
+import { DeleteFileGithubRepository } from "../model/GitHub/DeleteFile.repository.js";
 import { GetAllFilesGithubRepository } from "../model/GitHub/GetAllFiles.repository.js";
 import {
   EntriesTable,
@@ -12,7 +13,6 @@ import {
   PaginationPreviousPageButton,
   PaginationPageNumberSpan,
 } from "./../components/all-diary-entries.components.js";
-import { deleteFile } from "./../model/repository.js";
 
 async function populateTable({ currentPage, itemsPerPage }) {
   const { files, totalPages } = await new GetAllFilesGithubRepository(
@@ -140,7 +140,10 @@ async function populateTable({ currentPage, itemsPerPage }) {
 
     switch (dialogPurpose) {
       case "DELETE-DIARY-ENTRY":
-        await deleteFile(filePath, fileSHA);
+        await new DeleteFileGithubRepository(localStorage).execute({
+          path: filePath,
+          sha: fileSHA,
+        });
         ConfirmActionModalDialog.close();
         alert("file deleted.");
         break;
