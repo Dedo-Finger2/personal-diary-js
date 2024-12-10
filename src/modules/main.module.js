@@ -1,8 +1,10 @@
+import { GetAllFilesGithubRepository } from "../model/GitHub/GetAllFiles.repository.js";
 import { EntriesCountSpan } from "./../components/home.components.js";
-import * as repository from "./../model/repository.js";
 
 async function getEntriesCount() {
-  const { files } = await repository.getAllFiles({});
+  const { files } = await new GetAllFilesGithubRepository(localStorage).execute(
+    {},
+  );
 
   EntriesCountSpan.textContent = `${files.length} Entries`;
 }
