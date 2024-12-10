@@ -177,13 +177,13 @@ export async function getFile(path) {
 }
 
 export async function deleteFile(path, sha) {
+  const userApiKeyLocalStorage = localStorage.getItem("userAPIKey");
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
-
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
-    userSettings.apiKey,
+    userApiKeyLocalStorage.replaceAll('"', ""),
   );
 
   const response = await fetch(
