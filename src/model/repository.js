@@ -26,7 +26,7 @@ export async function getAllFiles({ currentPage, itemsPerPage }) {
   );
 
   const response = await fetch(
-    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/.`,
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/.?ref=${userSettings.branchName}`,
     {
       method: "GET",
       headers: {
@@ -76,13 +76,14 @@ export async function getAllFiles({ currentPage, itemsPerPage }) {
 }
 
 export async function storeDiaryEntry(title, body, categories) {
+  const userApiKeyLocalStorage = localStorage.getItem("userAPIKey");
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
 
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
-    userSettings.apiKey,
+    userApiKeyLocalStorage.replaceAll('"', ""),
   );
 
   const fileName = title + ".md";
@@ -104,6 +105,7 @@ export async function storeDiaryEntry(title, body, categories) {
           email: userSettings.userEmail,
         },
         content: btoa(String.fromCharCode(...new TextEncoder().encode(body))),
+        branch: userSettings.branchName,
       }),
     },
   );
@@ -131,17 +133,18 @@ export async function getFile(path) {
    * @property { number } size
    */
 
+  const userApiKeyLocalStorage = localStorage.getItem("userAPIKey");
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
 
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
-    userSettings.apiKey,
+    userApiKeyLocalStorage.replaceAll('"', ""),
   );
 
   const response = await fetch(
-    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}`,
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}?ref=${userSettings.branchName}`,
     {
       method: "GET",
       headers: {
@@ -202,6 +205,7 @@ export async function deleteFile(path, sha) {
           email: userSettings.userEmail,
         },
         sha: sha,
+        branch: userSettings.branchName,
       }),
     },
   );
@@ -216,17 +220,18 @@ export async function deleteFile(path, sha) {
 }
 
 export async function getFileContent(path) {
+  const userApiKeyLocalStorage = localStorage.getItem("userAPIKey");
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
 
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
-    userSettings.apiKey,
+    userApiKeyLocalStorage.replaceAll('"', ""),
   );
 
   const response = await fetch(
-    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}`,
+    `https://api.github.com/repos/${userSettings.userName}/${userSettings.repositoryName}/contents/${path}?ref=${userSettings.branchName}`,
     {
       method: "GET",
       headers: {
@@ -251,13 +256,14 @@ export async function getFileContent(path) {
 }
 
 export async function updateFileContent(newContent, path, sha) {
+  const userApiKeyLocalStorage = localStorage.getItem("userAPIKey");
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
   const cryptoKeys = await getKeyAndIVFromLocalStorage();
 
   const userApiKey = await decryptData(
     cryptoKeys.aesKey,
     cryptoKeys.iv,
-    userSettings.apiKey,
+    userApiKeyLocalStorage.replaceAll('"', ""),
   );
 
   const fileName = path.split(".")[0];
@@ -282,6 +288,7 @@ export async function updateFileContent(newContent, path, sha) {
         content: btoa(
           String.fromCharCode(...new TextEncoder().encode(newContent)),
         ),
+        branch: userSettings.branchName,
       }),
     },
   );
