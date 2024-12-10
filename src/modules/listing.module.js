@@ -1,5 +1,7 @@
 import { DeleteFileGithubRepository } from "../model/GitHub/DeleteFile.repository.js";
 import { GetAllFilesGithubRepository } from "../model/GitHub/GetAllFiles.repository.js";
+import { GetFileContentGithubRepository } from "../model/GitHub/GetFileContent.repository.js";
+import { AESCustomCryto } from "../utils/AESCrypto.util.js";
 import { Request } from "../utils/Request.util.js";
 import {
   EntriesTable,
@@ -68,6 +70,7 @@ async function populateTable({ currentPage, itemsPerPage }) {
 }
 
 (async () => {
+  let searchType = SearchTypeSelect.value;
   let { page } = Request.queryParams();
   if (page === undefined) page = 1;
 
@@ -79,7 +82,12 @@ async function populateTable({ currentPage, itemsPerPage }) {
     itemsPerPage: 5,
   });
 
-  SearchInput.addEventListener("input", (event) => {
+  SearchTypeSelect.addEventListener(
+    "change",
+    (event) => (searchType = event.target.value),
+  );
+
+  SearchInput.addEventListener("input", async (event) => {
     const inputValue = event.target.value;
 
     const tableRows = document.querySelectorAll("tr");
@@ -89,12 +97,42 @@ async function populateTable({ currentPage, itemsPerPage }) {
     }
 
     if (inputValue !== "") {
-      for (const row of tableRows) {
-        if (row.innerText.includes("Title\tActions")) continue;
-        const fileText = row.innerText.split("\t")[0];
-        if (!fileText.toUpperCase().includes(inputValue.toUpperCase())) {
-          row.classList.add("hidden");
-        }
+      switch (searchType.toUpperCase()) {
+        case "TITLE":
+          for (const row of tableRows) {
+            if (row.innerText.includes("Title\tActions")) continue;
+            const fileText = row.innerText.split("\t")[0];
+            if (!fileText.toUpperCase().includes(inputValue.toUpperCase())) {
+              row.classList.add("hidden");
+            }
+          }
+          break;
+        case "CONTENT":
+          for (const row of tableRows) {
+            if (row.innerText.includes("Title\tActions")) continue;
+            const fileText = row.innerText.split("\t")[0];
+            const filePath = fileText + ".md";
+
+            const fileContent = await new GetFileContentGithubRepository(
+              localStorage,
+            ).execute({
+              path: filePath,
+            });
+
+            const byteArray = Uint8Array.from(atob(fileContent), (char) =>
+              char.charCodeAt(0),
+            );
+            const decryptedContent = new TextDecoder().decode(byteArray);
+
+            if (
+              !decryptedContent.toUpperCase().includes(inputValue.toUpperCase())
+            ) {
+              row.classList.add("hidden");
+            }
+          }
+          break;
+        default:
+          break;
       }
     }
   });
