@@ -2,6 +2,7 @@ import { DeleteFileGithubRepository } from "../model/GitHub/DeleteFile.repositor
 import { GetAllFilesGithubRepository } from "../model/GitHub/GetAllFiles.repository.js";
 import { GetFileContentGithubRepository } from "../model/GitHub/GetFileContent.repository.js";
 import { AESCustomCryto } from "../utils/AESCrypto.util.js";
+import { Base64Utf8Crypto } from "../utils/Base64Utf8Crypto.util.js";
 import { Request } from "../utils/Request.util.js";
 import {
   EntriesTable,
@@ -119,10 +120,7 @@ async function populateTable({ currentPage, itemsPerPage }) {
               path: filePath,
             });
 
-            const byteArray = Uint8Array.from(atob(fileContent), (char) =>
-              char.charCodeAt(0),
-            );
-            const decryptedContent = new TextDecoder().decode(byteArray);
+            const decryptedContent = Base64Utf8Crypto.decryptData(fileContent);
 
             if (
               !decryptedContent.toUpperCase().includes(inputValue.toUpperCase())

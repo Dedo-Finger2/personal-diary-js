@@ -1,4 +1,5 @@
 import { GetFileGithubRepository } from "../model/GitHub/GetFile.repository.js";
+import { Base64Utf8Crypto } from "../utils/Base64Utf8Crypto.util.js";
 import { Request } from "../utils/Request.util.js";
 import {
   DiaryEntryTitleH1,
@@ -26,17 +27,17 @@ function handleCheckboxChange() {
 
   if (isContentRevealed) {
     const currentContent = DiaryEntryBodyTextarea.value;
-    const byteArray = new TextEncoder().encode(currentContent);
-    const encryptedContent = btoa(String.fromCharCode(...byteArray));
+
+    const encryptedContent = Base64Utf8Crypto.encryptData(currentContent);
     DiaryEntryBodyTextarea.value = encryptedContent;
+
     DiaryEntryBodyTextarea.setAttribute("revealed", "false");
   } else {
     const currentContent = DiaryEntryBodyTextarea.value;
-    const byteArray = Uint8Array.from(atob(currentContent), (char) =>
-      char.charCodeAt(0),
-    );
-    const decryptedContent = new TextDecoder().decode(byteArray);
+
+    const decryptedContent = Base64Utf8Crypto.decryptData(currentContent);
     DiaryEntryBodyTextarea.value = decryptedContent;
+
     DiaryEntryBodyTextarea.setAttribute("revealed", "true");
   }
 }
