@@ -1,5 +1,6 @@
 import { DeleteFileGithubRepository } from "../model/GitHub/DeleteFile.repository.js";
 import { GetAllFilesGithubRepository } from "../model/GitHub/GetAllFiles.repository.js";
+import { Request } from "../utils/Request.util.js";
 import {
   EntriesTable,
   ConfirmActionModalBodyParagraph,
@@ -67,14 +68,14 @@ async function populateTable({ currentPage, itemsPerPage }) {
 }
 
 (async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const currentPage = urlParams.get("page") ?? 1;
+  let { page } = Request.queryParams();
+  if (page === undefined) page = 1;
 
-  PaginationNextPageButton.href = `listing.html?page=${Number(currentPage) + 1}`;
-  PaginationPreviousPageButton.href = `listing.html?page=${Number(currentPage) - 1}`;
+  PaginationNextPageButton.href = `listing.html?page=${Number(page) + 1}`;
+  PaginationPreviousPageButton.href = `listing.html?page=${Number(page) - 1}`;
 
   const totalPages = await populateTable({
-    currentPage: Number(currentPage),
+    currentPage: Number(page),
     itemsPerPage: 5,
   });
 
@@ -98,15 +99,15 @@ async function populateTable({ currentPage, itemsPerPage }) {
     }
   });
 
-  if (!currentPage || Number(currentPage) <= 1) {
+  if (!page || Number(page) <= 1) {
     PaginationPreviousPageButton.href = "";
   }
 
-  if (Number(currentPage) >= totalPages) {
+  if (Number(page) >= totalPages) {
     PaginationNextPageButton.href = "";
   }
 
-  PaginationPageNumberSpan.textContent = currentPage + " of " + totalPages;
+  PaginationPageNumberSpan.textContent = page + " of " + totalPages;
 
   // Needs to be here cause the buttons are created by JS
   const DeleteDiaryEntryButtons = document.querySelectorAll(
@@ -152,8 +153,6 @@ async function populateTable({ currentPage, itemsPerPage }) {
     }
   });
 })();
-
-PaginationNextPageButton.addEventListener("click", () => {});
 
 ConfirmActionModalCancelButton.addEventListener("click", () =>
   ConfirmActionModalDialog.close(),

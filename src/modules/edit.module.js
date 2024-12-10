@@ -1,5 +1,6 @@
 import { GetFileContentGithubRepository } from "../model/GitHub/GetFileContent.repository.js";
 import { UpdateFileContentGithubRepository } from "../model/GitHub/UpdateFileContent.repository.js";
+import { Request } from "../utils/Request.util.js";
 import {
   EditDiaryEntryForm,
   DiaryEntryTitleInput,
@@ -7,15 +8,13 @@ import {
   RevealDiaryEntryContentCheckbox,
 } from "./../components/edit.components.js";
 
-const urlParams = new URLSearchParams(window.location.search);
-const filePath = urlParams.get("path");
-const fileSha = urlParams.get("sha");
+const { path, sha } = Request.queryParams();
 
 async function fillInputs() {
   const fileContent = await new GetFileContentGithubRepository(
     localStorage,
-  ).execute({ path: filePath });
-  const fileTitle = filePath.split(".")[0];
+  ).execute({ path });
+  const fileTitle = path.split(".")[0];
 
   DiaryEntryTitleInput.value = fileTitle;
   DiaryEntryBodyTextarea.value = fileContent;
@@ -54,8 +53,8 @@ async function handleEditFormSubmit(event) {
 
   await new UpdateFileContentGithubRepository(localStorage).execute({
     content: newContent,
-    path: filePath,
-    sha: fileSha,
+    path,
+    sha,
   });
 
   alert("File updated!");

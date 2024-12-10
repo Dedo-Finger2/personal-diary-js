@@ -1,4 +1,5 @@
 import { GetFileGithubRepository } from "../model/GitHub/GetFile.repository.js";
+import { Request } from "../utils/Request.util.js";
 import {
   DiaryEntryTitleH1,
   DiaryEntryBodyTextarea,
@@ -9,11 +10,10 @@ async function handleGetFileInfo() {
   RevealContentCheckbox.checked = false;
   RevealContentCheckbox.setAttribute("revealed", "false");
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const filePath = urlParams.get("path");
+  const { path } = Request.queryParams();
 
   const file = await new GetFileGithubRepository(localStorage).execute({
-    path: filePath,
+    path,
   });
 
   DiaryEntryTitleH1.textContent = file.name;
