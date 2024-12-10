@@ -1,4 +1,4 @@
-import { decryptData, getKeyAndIVFromLocalStorage } from "../utils/security.js";
+import { AESCustomCryto } from "../utils/AESCrypto.util.js";
 
 export class BaseRepositroy {
   apiKey;
@@ -30,7 +30,8 @@ export class BaseRepositroy {
   }
 
   async #getKeyAndIVFromLocalStorage() {
-    const { iv, aesKey } = await getKeyAndIVFromLocalStorage();
+    const { iv, aesKey } =
+      await new AESCustomCryto().getAESKeyAndIVFromLocalStorage();
     if (iv === undefined || aesKey === undefined) {
       throw new Error(
         "Error on trying to get IV and AESKey from localStorage.",
@@ -40,11 +41,11 @@ export class BaseRepositroy {
   }
 
   async decryptUserApiKey(iv, aesKey, encryptedApiKey) {
-    const apiKey = await decryptData(
-      aesKey,
+    const apiKey = await new AESCustomCryto().decryptData({
+      key: aesKey,
       iv,
-      encryptedApiKey.replaceAll('"', ""),
-    );
+      data: encryptedApiKey.replaceAll('"', ""),
+    });
     if (apiKey === undefined || apiKey === "") {
       throw new Error("Error trying to decrypt userAPiKey.");
     }

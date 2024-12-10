@@ -1,3 +1,4 @@
+import { AESCustomCryto } from "../utils/AESCrypto.util.js";
 import {
   SettingsForm,
   BranchNameInput,
@@ -8,11 +9,6 @@ import {
   UserEmailInput,
   SaveAPIKeyButton,
 } from "./../components/settings.components.js";
-import {
-  convertKeyAndIVToBase64,
-  encryptData,
-  getCryptoKey,
-} from "./../utils/security.js";
 
 async function checkUserSettings() {
   const userSettings = JSON.parse(localStorage.getItem("userSettings"));
@@ -69,16 +65,23 @@ window.addEventListener("load", (_event) => {
 SaveAPIKeyButton.addEventListener("click", async () => {
   const newAPIKey = ApiKeyInput.value;
 
-  const { aesKey, iv } = await getCryptoKey();
-  const encryptedData = await encryptData(aesKey, iv, newAPIKey);
+  const { aesKey, iv } = await new AESCustomCryto().newKey();
+  const encryptedData = await new AESCustomCryto().encryptData({
+    key: aesKey,
+    iv,
+    data: newAPIKey,
+  });
 
-  const { keyBase64, ivBase64 } = await convertKeyAndIVToBase64(aesKey, iv);
+  const { keyBase64, ivBase64 } =
+    await new AESCustomCryto().convertAESKeyAndIVToBase64({ aesKey, iv });
 
   localStorage.setItem("userAPIKey", JSON.stringify(encryptedData));
   localStorage.setItem(
     "encryptionKeys",
     JSON.stringify({ keyBase64, ivBase64 }),
   );
+
+  alert("API Key updated!");
 });
 
 SettingsForm.addEventListener("submit", handleSettingsFormSubmition);
