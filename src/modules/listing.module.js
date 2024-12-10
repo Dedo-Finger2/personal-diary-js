@@ -1,3 +1,4 @@
+import { GetAllFilesGithubRepository } from "../model/GitHub/GetAllFiles.repository.js";
 import {
   EntriesTable,
   ConfirmActionModalBodyParagraph,
@@ -11,10 +12,12 @@ import {
   PaginationPreviousPageButton,
   PaginationPageNumberSpan,
 } from "./../components/all-diary-entries.components.js";
-import { deleteFile, getAllFiles } from "./../model/repository.js";
+import { deleteFile } from "./../model/repository.js";
 
 async function populateTable({ currentPage, itemsPerPage }) {
-  const { files, totalPages } = await getAllFiles({
+  const { files, totalPages } = await new GetAllFilesGithubRepository(
+    localStorage,
+  ).execute({
     currentPage,
     itemsPerPage,
   });
