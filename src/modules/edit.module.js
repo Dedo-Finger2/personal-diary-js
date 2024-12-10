@@ -1,5 +1,5 @@
+import { GetFileContentGithubRepository } from "../model/GitHub/GetFileContent.repository.js";
 import { UpdateFileContentGithubRepository } from "../model/GitHub/UpdateFileContent.repository.js";
-import { getFileContent, updateFileContent } from "../model/repository.js";
 import {
   EditDiaryEntryForm,
   DiaryEntryTitleInput,
@@ -12,7 +12,9 @@ const filePath = urlParams.get("path");
 const fileSha = urlParams.get("sha");
 
 async function fillInputs() {
-  const fileContent = await getFileContent(filePath);
+  const fileContent = await new GetFileContentGithubRepository(
+    localStorage,
+  ).execute({ path: filePath });
   const fileTitle = filePath.split(".")[0];
 
   DiaryEntryTitleInput.value = fileTitle;
