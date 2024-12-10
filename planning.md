@@ -20,3 +20,5 @@ Quero um suporte melhor aos erros e avisos ao usuário, atualmente não tem como
 
 Sobre o CSS, planejo fazer um design meio caderno da vida real, quero que o campo de escrita de texto seja
 como um papel mesmo, e se possível, fazer uma animação de virada de página quando for ler o diário.
+
+Quero suporte a categorias nas anotações, tomando forma de hashtags para filtragem.
