@@ -1,4 +1,4 @@
-import { getFile } from "../model/repository.js";
+import { GetFileGithubRepository } from "../model/GitHub/GetFile.repository.js";
 import {
   DiaryEntryTitleH1,
   DiaryEntryBodyTextarea,
@@ -12,7 +12,9 @@ async function handleGetFileInfo() {
   const urlParams = new URLSearchParams(window.location.search);
   const filePath = urlParams.get("path");
 
-  const file = await getFile(filePath);
+  const file = await new GetFileGithubRepository(localStorage).execute({
+    path: filePath,
+  });
 
   DiaryEntryTitleH1.textContent = file.name;
   DiaryEntryBodyTextarea.value = file.content;
